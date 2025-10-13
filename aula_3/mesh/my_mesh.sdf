@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <world name="default">
+
+    <!-- chão e sol (model:// do Classic) -->
+    <include><uri>model://ground_plane</uri></include>
+    <include><uri>model://sun</uri></include>
+
+    <!-- 1) Cena mais neutra -->
+<scene>
+  <!-- 0.28–0.35 costuma ficar natural -->
+  <ambient>0.35 0.35 0.35 1</ambient>
+  <background>0.85 0.85 0.88 1</background>
+  <shadows>true</shadows>
+</scene>
+
+<!-- 2) Luzes de teto: 4 spots apontando para baixo -->
+<!-- ajuste o Z (altura) e os X/Y ao tamanho da sua sala -->
+<light type="spot" name="ceiling_spot_1">
+  <cast_shadows>false</cast_shadows>
+  <pose>-3 -3 3.0 0 0 0</pose>
+  <diffuse>0.65 0.65 0.7 1</diffuse>
+  <specular>0.05 0.05 0.05 1</specular>
+  <attenuation>
+    <range>25</range>
+    <constant>0.30</constant>
+    <linear>0.02</linear>
+    <quadratic>0.00</quadratic>
+  </attenuation>
+  <direction>0 0 -1</direction>
+  <spot>
+    <inner_angle>0.9</inner_angle>
+    <outer_angle>1.2</outer_angle>
+    <falloff>0.3</falloff>
+  </spot>
+</light>
+
+<light type="spot" name="ceiling_spot_2">
+  <cast_shadows>false</cast_shadows>
+  <pose>3 -3 3.0 0 0 0</pose>
+  <diffuse>0.65 0.65 0.7 1</diffuse>
+  <specular>0.05 0.05 0.05 1</specular>
+  <attenuation>
+    <range>25</range>
+    <constant>0.30</constant>
+    <linear>0.02</linear>
+    <quadratic>0.00</quadratic>
+  </attenuation>
+  <direction>0 0 -1</direction>
+  <spot>
+    <inner_angle>0.9</inner_angle>
+    <outer_angle>1.2</outer_angle>
+    <falloff>0.3</falloff>
+  </spot>
+</light>
+
+<light type="spot" name="ceiling_spot_3">
+  <cast_shadows>false</cast_shadows>
+  <pose>-3 3 3.0 0 0 0</pose>
+  <diffuse>0.65 0.65 0.7 1</diffuse>
+  <specular>0.05 0.05 0.05 1</specular>
+  <attenuation>
+    <range>25</range>
+    <constant>0.30</constant>
+    <linear>0.02</linear>
+    <quadratic>0.00</quadratic>
+  </attenuation>
+  <direction>0 0 -1</direction>
+  <spot>
+    <inner_angle>0.9</inner_angle>
+    <outer_angle>1.2</outer_angle>
+    <falloff>0.3</falloff>
+  </spot>
+</light>
+
+<light type="spot" name="ceiling_spot_4">
+  <cast_shadows>false</cast_shadows>
+  <pose>3 3 10.0 0 0 0</pose>
+  <diffuse>0.65 0.65 0.7 1</diffuse>
+  <specular>0.05 0.05 0.05 1</specular>
+  <attenuation>
+    <range>25</range>
+    <constant>0.30</constant>
+    <linear>0.02</linear>
+    <quadratic>0.00</quadratic>
+  </attenuation>
+  <direction>0 0 -1</direction>
+  <spot>
+    <inner_angle>0.9</inner_angle>
+    <outer_angle>1.2</outer_angle>
+    <falloff>0.3</falloff>
+  </spot>
+</light>
+
+
+    <!-- sua malha -->
+    <model name="my_mesh">
+      <pose>0 0 0 0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <!-- Se sua malha for Y-up (como o duck.dae), descomente a linha de pose: -->
+          <!-- <pose>0 0 0 1.5708 0 0</pose>  roll=+90°  -->
+          <geometry>
+            <mesh>
+              <!-- como está na MESMA pasta, use caminho relativo: -->
+              <uri>file://my_mesh.dae</uri>
+              <!-- (opcional) <scale>1 1 1</scale> -->
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
