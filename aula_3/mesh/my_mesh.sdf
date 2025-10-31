@@ -2,20 +2,20 @@
 <sdf version="1.7">
   <world name="default">
 
-    <!-- 1) Configurações de cena -->
+    <!-- 🌄 Cena -->
     <scene>
       <ambient>0.35 0.35 0.35 1</ambient>
       <background>0.85 0.85 0.88 1</background>
       <shadows>true</shadows>
     </scene>
 
-    <!-- 2) Física padrão -->
+    <!-- ⚙️ Física -->
     <physics name="1ms" type="ignored">
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
     </physics>
 
-    <!-- 3) Gui padrão -->
+    <!-- 🪟 Câmera -->
     <gui fullscreen="0">
       <camera name="user_camera">
         <pose>4 4 3 0 0.5 -2.3</pose>
@@ -23,27 +23,21 @@
       </camera>
     </gui>
 
-    <!-- 4) Chão e sol -->
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/Ground Plane</uri>
-      <pose>0 0 0 0 0 0</pose>
-      <static>true</static>
-    </include>
-
+    <!-- ☀️ Sol -->
     <include>
       <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/Sun</uri>
       <pose>0 0 10 0 0 0</pose>
       <static>true</static>
     </include>
 
-    <!-- 5) Sua malha -->
-    <model name="my_mesh">
-      <pose>0 0 0 0 0 0</pose>
+    <!-- 🧱 Sala com colisão (piso físico elevado) -->
+    <model name="sala_com_colisao">
       <static>true</static>
-      <link name="body">
+      <pose>0 0 0 0 0 0</pose>
+
+      <link name="estrutura">
+        <!-- Parte visual -->
         <visual name="visual">
-          <!-- Se for Y-up (como Blender ou DAE padrão), ajuste rotação -->
-          <!-- <pose>0 0 0 1.5708 0 0</pose> -->
           <geometry>
             <mesh>
               <uri>file://my_mesh.dae</uri>
@@ -51,8 +45,35 @@
             </mesh>
           </geometry>
         </visual>
+
+        <!-- Parte física -->
+        <collision name="collision">
+          <geometry>
+            <box><size>6 6 0.3</size></box>
+          </geometry>
+          <!-- Piso físico quase no mesmo nível do chão visual -->
+          <pose>0 0 0.21 0 0 0</pose>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.8</mu>
+                <mu2>0.8</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <collide_bitmask>0x01</collide_bitmask>
+            </contact>
+          </surface>
+        </collision>
       </link>
     </model>
+
+    <!-- 🤖 TurtleBot3 Burger -->
+    <include>
+      <uri>model://turtlebot3_burger</uri>
+      <!-- Robô nasce sobre o piso físico -->
+      <pose>2.5 2.5 0.20 0 0 1.57</pose>
+    </include>
 
   </world>
 </sdf>
